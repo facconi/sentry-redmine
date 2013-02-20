@@ -94,7 +94,7 @@ class RedminePlugin(IssuePlugin):
         """Create a Redmine issue"""
         headers = { "X-Redmine-API-Key": self.get_option('key', group.project),
                     'content-type': 'application/json' }
-        url = urlparse.urljoin(self.get_option('host', group.project), "/issues.json")
+        url = urlparse.urljoin(self.get_option('host', group.project), "issues.json")
         payload = {
             'project_id': self.get_option('project_id', group.project),
             'tracker_id': self.get_option('tracker_id', group.project),
