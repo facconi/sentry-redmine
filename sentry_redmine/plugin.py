@@ -109,15 +109,15 @@ class RedminePlugin(IssuePlugin):
 
         try:
             r = requests.post(url, data=json.dumps({'issue': payload}), headers=headers)
-        except requests.exceptions.HTTPError, e:
-            raise forms.ValidationError('Unable to reach Redmine host: %s' % (e.reason,))
+        except requests.exceptions.HTTPError as e:
+            raise forms.ValidationError('Unable to reach Redmine host: %s' % repr(e))
 
         try:
             data = json.loads(r.text)
-        except json.JSONDecodeError, e:
+        except json.JSONDecodeError as e:
             #print >> sys.stderr, "ERROR: %s" % e
             #print >> sys.stderr, "RESP:", r.text
-            raise forms.ValidationError('Unable to reach Redmine host: %s' % (e.reason,))
+            raise forms.ValidationError('Unable to reach Redmine host: %s' % repr(e))
 
         if not 'issue' in data or not 'id' in data['issue']:
             raise forms.ValidationError('Unable to create redmine ticket')
